@@ -1,0 +1,101 @@
+<style type="text/css">
+	body{
+		margin: 20px;
+	}
+	.Grading{
+		border-bottom: 1px solid gray;
+	}
+	.view{
+		margin: 20px;
+	}
+	input{
+		margin: 10px;
+	}
+</style>
+
+<body>
+<div class="Grading">
+	<h1>Grading System</h1>
+</div>
+<div class="view">
+Quiz Count: <input type="text" name="score" id="count">
+<button id="btn-count">add</button>
+<br/>
+Quiz Over: <input type="text" name="quizOver" id="over">
+<button id="btn-over">add</button>
+<br>
+Quiz Score: <input type="text" name="score" id="score">
+<button id="btn-score">add</button>
+<br/>
+<button type="button" id="btn-add">calculate</button>
+<p id="print1"></p>
+<p id="print2"></p>
+<p id="print3"></p>
+</div>
+
+<script>
+
+const quizOver = [];
+const score = [];
+const count = [];
+let studentScore = document.getElementById('score');
+let quizCount = document.getElementById('count');
+let Over = document.getElementById('over');
+let print1 = document.getElementById('print1');
+let print2 = document.getElementById('print2');
+let print3 = document.getElementById('print3');
+
+document.getElementById("btn-count").addEventListener("click", function(){
+	count.push(quizCount.value);
+	if(count.length !== 1){
+		//alert("Count can only contain 1 value!")
+		alert("Count can only contain 1 value!");
+		count.splice(1, 1);
+		alert(count);
+	}else{
+		print1.innerHTML = `Quiz count set to ${count}`;
+	}
+});
+
+document.getElementById("btn-score").addEventListener('click', function(){
+	score.push(studentScore.value);
+	if(score.length < count[0]){
+		alert("Score length is less than quiz count! Add more. Should be equal \
+			to atlist:"+ " "+ count[0]);
+	}else if(score.length > count[0]){
+		alert('Oops! to much.!');
+		score.splice(1, 1);
+		print3.innerHTML ="Your score: "+ score +" out of"+ " " + quizOver;
+	}else{
+		alert("Good to Go!");
+		print3.innerHTML ="Your score: "+ score +" out of"+ " " + quizOver;
+	}
+});
+document.getElementById('btn-over').addEventListener('click', function(){
+	quizOver.push(Over.value);
+
+	print2.innerHTML = "Quiz over"+" "+ quizOver;
+	console.log(quizOver);
+
+	if(quizOver.length > count[0]){
+		quizOver.splice(1, 1);
+		print2.innerHTML = "Quiz over"+" "+ quizOver;
+		console.log(quizOver);
+		//alert("Too much should be equal to" + " " + count[0].value);
+	}else if(quizOver.length < count[0]){
+		alert('Need more atlist' + " " + quizOver);
+		print2.innerHTML = "Quiz over"+" "+ count;
+	}
+	//print2.innerHTML = "Quiz over"+ " "+ quizOver;
+});
+document.getElementById("btn-add").addEventListener('click', function(){
+	if(quizOver.length !== score.length){
+		alert("need mo field value atlist = " + " " + score.length );
+	}else if(quizOver.length === score.length){
+		print3.innerHTML = "Gade 100%";
+	}else{
+		alert("Good to go");
+	}
+});
+</script>
+</body>
